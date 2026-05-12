@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace MvcCoreAWSs3.Services
@@ -51,5 +52,12 @@ namespace MvcCoreAWSs3.Services
             /* EXTRAEMOS LAS KEYS (FILENAME) POR DEFECTO NOS DEVUELVE LA ULTIMA VERSION */
             return response.Versions.Select(f => f.Key).ToList();
         }
+
+        public async Task<Stream> GetPrivateFileAsync(string filename)
+        {
+            GetObjectResponse response = await this.clientS3.GetObjectAsync(this.BucketName, filename);
+            return response.ResponseStream;
+        }
+
     }
 }

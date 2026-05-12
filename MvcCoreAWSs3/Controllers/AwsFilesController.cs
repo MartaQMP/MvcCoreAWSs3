@@ -42,5 +42,11 @@ namespace MvcCoreAWSs3.Controllers
             await this.service.DeleteFileAsync(fileName);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> PrivateFile(string filename)
+        {
+            Stream stream = await this.service.GetPrivateFileAsync(filename);
+            return File(stream, "image/png");
+        }
     }
 }
